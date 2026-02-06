@@ -1,0 +1,24 @@
+{
+  "name": "helply-backend",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jazzm11/helply-backend.git"
+  },
+  "author": "GROUP FCDJ",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jazzm11/helply-backend/issues"
+  },
+  "homepage": "https://github.com/jazzm11/helply-backend#readme",
+  "description": "",
+  "dependencies": {
+    "express": "^5.2.1",
+    "nodemon": "^3.1.11"
+  }
+}
