@@ -23,6 +23,18 @@ userSchema.pre("save", async function(){
     }
 })
 
+userSchema.statics.signUp = async(name, passwd, conPass)=>{
+if(passwd === conPass){
+    const user = new User({
+        name:name,
+        passwd:passwd
+    })
+    await user.save()
+    return user._id
+}
+throw Error("The passwords doesn't match")
+}
+
 const User = model("Users", userSchema);
 
 module.exports = User
