@@ -35,6 +35,14 @@ if(passwd === conPass){
 throw Error("The passwords doesn't match")
 }
 
+userSchema.statics.signUp = async(name, passwd)=>{
+    const user = await User.find({name: name})
+    if(await argon2.verify(user.passwd, passwd)){
+        return user._id
+    }
+    throw Error("The provided password is wrong")
+}
+
 const User = model("Users", userSchema);
 
 module.exports = User
