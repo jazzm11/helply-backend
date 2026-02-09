@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 
+const cors = require("cors")
 // App setup
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -14,6 +15,14 @@ connectDB(process.env.MONGO_URI);
 const default_routes = require("./routes/default_routes");
 
 const user_routes = require("./routes/user_routes")
+
+app.use(
+  cors({
+    origin: `${process.env.HOST}`,
+    methods: ['GET', 'POST', 'DELETE', 'PUT'],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  }),
+);
 // Use routes
 app.use(default_routes)
 
