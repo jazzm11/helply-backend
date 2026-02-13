@@ -6,4 +6,6 @@ router.post("/signUp", controller.sign_up_user);
 
 router.post("/signIn", controller.sign_in_user);
 
-module.exports = router;
+router.get("/tickets/:user", controller.get_User_Tickets)
+
+module.exports = router
