@@ -34,13 +34,17 @@ userSchema.statics.signUp = async (name, passwd, conPass) => {
   throw Error("The passwords doesn't match");
 };
 
-userSchema.statics.signIn = async (name, passwd) => {
-  const user = await User.find({ name: name });
-  if (await argon2.verify(user.passwd, passwd)) {
-    return user._id;
-  }
-  throw Error("The provided password is wrong");
-};
+userSchema.statics.signIn = async(name, passwd)=>{
+    const user = await User.findOne({name: name})
+    if(user){
+        console.log(user)
+    if(await argon2.verify(user.passwd, passwd)){
+        return user._id
+    }
+    throw Error("The provided password is wrong")
+}
+throw Error("User not found")
+}
 
 const User = model("Users", userSchema);
 
