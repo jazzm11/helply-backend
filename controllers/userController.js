@@ -1,13 +1,20 @@
 const User = require("../models/User")
+const jwt = require("jsonwebtoken")
 
+const maxValidDate = 24*60*60
+const signJWT = (id)=>{
+    return jwt.sign({id}, process.env.secret, {
+        expiresIn: maxValidDate
+    })}
 
 const sign_up_user = async(req,res)=>{
 const {name, passwd, conPass} = req.body
     try{
         const userId = await User.signUp(name,passwd, conPass)
-        res.status(201).json({userId})
+        const token = signJWT(userId)
+        res.status(201).json({token})
     }catch(err){
-        console.log(err)
+        console.log("Sign In error:",err)
         res.status(500).json({err})
     }
 }
@@ -16,9 +23,10 @@ const sign_in_user = async(req,res)=>{
     const {name,passwd} = req.body
     try{
         const userId = await User.signIn(name,passwd)
-        res.status(201).json({userId})
+        const token = signJWT(userId)
+        res.status(201).json({token})
     }catch(err){
-        console.log(err)
+        console.log("Sign In error:",err)
         res.status(500).json({err})
     }
 }
