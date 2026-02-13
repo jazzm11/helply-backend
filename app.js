@@ -1,15 +1,15 @@
 const express = require("express");
 const app = express();
-const cors = require("cors")
+const cors = require("cors");
 
 // App setup
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-require('dotenv').config();
+require("dotenv").config();
 app.use(
   cors({
     origin: `${process.env.HOST}`,
-    methods: ['GET', 'POST', 'DELETE', 'PUT'],
+    methods: ["GET", "POST", "DELETE", "PUT"],
     allowedHeaders: ["Content-Type", "Authorization"],
   }),
 );
@@ -20,13 +20,13 @@ connectDB(process.env.MONGO_URI);
 
 // Import routes
 const default_routes = require("./routes/default_routes");
-const user_routes = require("./routes/user_routes")
+const user_routes = require("./routes/user_routes");
 
 // Use routes
-app.use(default_routes)
+app.use(default_routes);
 
-app.use("/user", user_routes)
+app.use("/user", user_routes);
 // Start the server
-app.listen(6001, ()=>{
-    console.log("Server running on port 6001");
-})
+app.listen(6001, () => {
+  console.log("Server running on port 6001");
+});
