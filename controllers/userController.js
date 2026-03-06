@@ -53,8 +53,9 @@ const verify_cookie = async (req,res)=>{
         res.status(400).json({success:false});
       }else{
         console.log("DecodedToken",decodedToken );
-        const user = await User.findById(decodedToken.id)
-        res.status(200).json({success:true, user:user})
+        const user = await User.findById(decodedToken.id);
+        console.log(user)
+        res.status(200).json({success:true, user:user});
       }
     })
   
