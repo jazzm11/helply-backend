@@ -44,4 +44,25 @@ const get_User_Tickets = async (req, res) => {
   }
 };
 
-module.exports = { sign_up_user, sign_in_user, get_User_Tickets };
+const verify_cookie = async (req,res)=>{
+    const token = req.params.token;
+  try {
+    jwt.verify(token,process.env.secret, async(err, decodedToken)=>{
+      if(err){
+        console.log("JWT error:", err);
+        res.status(400).json({success:false});
+      }else{
+        console.log("DecodedToken",decodedToken );
+        const user = await User.findById(decodedToken.id);
+        console.log(user)
+        res.status(200).json({success:true, user:user});
+      }
+    })
+  
+  } catch (err) {
+    console.log(err);
+    res.status(300).json({ err });
+  }
+}
+
+module.exports = { sign_up_user, sign_in_user, get_User_Tickets,verify_cookie };

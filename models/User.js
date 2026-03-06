@@ -2,16 +2,20 @@ const { Schema, model } = require("mongoose");
 const argon2 = require("argon2");
 
 const userSchema = new Schema({
-  name: {
-    type: String,
-    required: true,
-    unique: true,
-  },
-  passwd: {
-    type: String,
-    required: true,
-    unique: true,
-  },
+    name:{
+        type: String,
+        required:true,
+        unique:true
+    },
+    passwd:{
+        type: String,
+        required: true,
+        unique:true
+    },
+    role:{
+        type:String,
+        default: "Member"
+    }
 });
 
 userSchema.pre("save", async function () {
