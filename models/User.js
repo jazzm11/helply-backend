@@ -1,6 +1,5 @@
-const {Schema, model}= require("mongoose")
-const argon2 = require("argon2")
-
+const { Schema, model } = require("mongoose");
+const argon2 = require("argon2");
 
 const userSchema = new Schema({
     name:{
@@ -19,25 +18,25 @@ const userSchema = new Schema({
     }
 });
 
-userSchema.pre("save", async function(){
-    try{
-        this.passwd = await argon2.hash(this.passwd)
-    }catch(err){
-        console.log("Couldn't hash the password. Cause:", err)
-    }
-})
+userSchema.pre("save", async function () {
+  try {
+    this.passwd = await argon2.hash(this.passwd);
+  } catch (err) {
+    console.log("Couldn't hash the password. Cause:", err);
+  }
+});
 
-userSchema.statics.signUp = async(name, passwd, conPass)=>{
-if(passwd === conPass){
+userSchema.statics.signUp = async (name, passwd, conPass) => {
+  if (passwd === conPass) {
     const user = new User({
-        name:name,
-        passwd:passwd
-    })
-    await user.save()
-    return user._id
-}
-throw Error("The passwords doesn't match")
-}
+      name: name,
+      passwd: passwd,
+    });
+    await user.save();
+    return user._id;
+  }
+  throw Error("The passwords doesn't match");
+};
 
 userSchema.statics.signIn = async(name, passwd)=>{
     const user = await User.findOne({name: name})
@@ -53,4 +52,4 @@ throw Error("User not found")
 
 const User = model("Users", userSchema);
 
-module.exports = User
+module.exports = User;
